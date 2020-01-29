@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import cytoscape from 'cytoscape';
 import { set, setProperties, action } from '@ember/object';
 import fetch from 'fetch';
+import ENV from 'word-relationship-network/config/environment';
 
 export default class RelationshipNetworkComponent extends Component {
   tagName = '';
@@ -53,7 +54,7 @@ export default class RelationshipNetworkComponent extends Component {
 
     set(this, 'word', nome);
 
-    const palavra = await fetch(`http://localhost:5000/words?nome=${nome}`).then(function(response) {
+    const palavra = await fetch(`${ENV.APP.API_RELATIONSHIP}/words?nome=${nome}`).then(function(response) {
       return response.json();
     });
 
