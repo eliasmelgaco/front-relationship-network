@@ -1,37 +1,15 @@
-<div class="wrapper">
-  <div>
-    <Input @value={{this.word}} @placeholder="digite aqui a sua pesquisa" />
-    <button type="button" {{on "click" (fn this.searchWord this.word)}} class="btn-buscar">BUSCAR</button>
+<div class="relationship-network">
+  <RelationshipNetwork::Panel
+    @message={{this.message}}
+    @palavra={{this.palavra}}
+    @significados={{this.significados}}
+    @relacionados={{this.relacionados}}
+    @expressoes={{this.expressoes}}
+    @citacoes={{this.citacoes}}
+    @searchWord={{this.searchWord}}
+  />
 
-    <div {{did-insert this.insertCytoscape}} class="cv" >
-      {{this.error}}
-    </div>
-  </div>
-
-  <div>
-    <div>
-      <p>Significados</p>
-      {{#each this.significados as |significado|}}
-        <p class="results">{{significado}}</p>
-      {{/each}}
-    </div>
-    <div>
-      <p>Relacionadas</p>
-      {{#each this.relacionadas as |relacionada|}}
-        <p class="results">{{relacionada.data.id}}</p>
-      {{/each}}
-    </div>
-    {{!-- <div>
-      <p>Sinonimos</p>
-      {{#each this.sinonimos as |sinonimo|}}
-        <p class="results">{{sinonimo.data.id}}</p>
-      {{/each}}
-    </div> --}}
-    <div>
-      <p>Citacoes</p>
-      {{#each this.citacoes as |citacao|}}
-        <p class="results">{{citacao}}</p>
-      {{/each}}
-    </div>
+  <div class="relationship-network__chart">
+    <div {{did-insert this.insertCytoscape}} class="relationship-network__chart__cytoscape" data-test="chart"></div>
   </div>
 </div>

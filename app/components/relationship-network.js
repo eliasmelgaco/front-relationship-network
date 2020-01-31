@@ -5,18 +5,7 @@ import fetch from 'fetch';
 import ENV from 'word-relationship-network/config/environment';
 
 export default class RelationshipNetworkComponent extends Component {
-  tagName = '';
-
-  sinonimos = [];
-
-  relacionadas = [];
-
-  source = [];
-  elements = [];
-
   cy = null;
-
-  word = 'cachorro';
 
   insertCytoscape = (element) => {
     set(this, 'cy', cytoscape({
@@ -28,6 +17,7 @@ export default class RelationshipNetworkComponent extends Component {
             'label': 'data(id)',
             'text-valign': 'center',
             'color': '#000000',
+            'font-size': '8px',
             'background-color': '#3a7ecf'
           }
         },
@@ -45,84 +35,69 @@ export default class RelationshipNetworkComponent extends Component {
     this.cy.on('click', 'node', (evt) => {
       const nome = evt.target.id();
 
-      this._queryWord(nome);
+      this._queryWord(nome).then((resultado) => {
+        if (!resultado.status === 200) {
+          this._clearProperties();
+
+          this._handleNetwork(resultado);
+        }
+      });
     });
   }
 
   _queryWord = async (nome) => {
     this._clearProperties();
 
-    set(this, 'word', nome);
+    set(this, 'palavra', nome);
 
-    const palavra = await fetch(`${ENV.APP.API_RELATIONSHIP}/words?nome=${nome}`).then(function(response) {
-      return response.json();
+    const resultado = await fetch(`${ENV.APP.API_RELATIONSHIP}/words?nome=${nome}`)
+      .then(async (response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        await response.json().then(({ message }) => {
+          set(this, 'message', message);
+        });
+      });
+
+    this._handleNetwork(resultado);
+  }
+
+
+  _clearProperties = () => {
+    setProperties(this, {
+      message: null,
+      significados: null,
+      relacionados: null,
+      expressoes: null,
+      citacoes: null
     });
 
-    this._handleNetwork(palavra);
+    this.cy && this.cy.elements().remove();
   }
+
+  _handleNetwork = (data) => {
+    if (data) {
+      setProperties(this, {
+        significados: data.significados,
+        relacionados: data.relacionados,
+        expressoes: data.expressoes,
+        citacoes: data.citacoes
+      });
+
+      this.cy.add(data.chart);
+
+      var layout = this.cy.layout({
+        name: 'cose',
+        animate: true,
+        animationDuration: 1000
+      });
+      layout.run();
+    }
+  };
 
   @action
   searchWord(nome) {
     this._queryWord(nome);
   }
-
-  _clearProperties() {
-    setProperties(this, {
-      error: null,
-      source: null,
-      // sinonimos: null,
-      relacionadas: null,
-      edges: null,
-      elements: null,
-      significados: null,
-      citacoes: null
-    });
-
-    this.cy.elements().remove();
-  }
-
-  _handleNetwork = (data) => {
-    set(this, 'source', [{ data: { id: data.nome } }]);
-
-    // set(this, 'sinonimos', data.dicionario_sinonimos.map((sinonimo, index) => ({ data: { id: sinonimo, weight: index + 1 } }) ));
-
-    // set(this, 'edges', this.sinonimos.map((sinonimo) => {
-    //   return {
-    //     data: {
-    //       id: data.nome + sinonimo.data.id,
-    //       source: data.nome,
-    //       target: sinonimo.data.id
-    //     }
-    //   };
-    // }));
-    
-    // set(this, 'elements', this.source.concat(this.sinonimos).concat(this.edges));
-
-    set(this, 'relacionadas', data.palavras_relacionadas.map((relacionada, index) => ({ data: { id: relacionada, weight: index + 1 } }) ));
-
-    set(this, 'edges', this.relacionadas.map((sinonimo) => {
-      return {
-        data: {
-          id: data.nome + sinonimo.data.id,
-          source: data.nome,
-          target: sinonimo.data.id
-        }
-      };
-    }));
-
-    set(this, 'elements', this.source.concat(this.relacionadas).concat(this.edges));
-
-    set(this, 'significados', data.dicionario_significados);
-
-    set(this, 'citacoes', data.dicionario_citacoes);
-
-    this.cy.add(this.elements);
-
-    var layout = this.cy.layout({
-      name: 'cose',
-      animate: true,
-      animationDuration: 1000
-    });
-    layout.run();
-  };
 }

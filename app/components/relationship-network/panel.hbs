@@ -1,0 +1,78 @@
+<div class="relationship-network__panel">
+  <section class="relationship-network__panel__section">
+    <div class="relationship-network__panel__section__search">
+      <label for="search" class="relationship-network__panel__section__search__label">Digite a palavra</label>
+      <div class="relationship-network__panel__section__search__group">
+        <Input
+          id="search"
+          @value={{@palavra}}
+          @placeholder="Ex: Casa"
+          class="relationship-network__panel__section__search__group__input"
+          data-test-panel="input" />
+
+        <button
+          type="button"
+          {{on "click" (fn @searchWord @palavra)}}
+          class="relationship-network__panel__section__search__group__button"
+          data-test-panel="buscar">BUSCAR</button>
+      </div>
+    </div>
+  </section>
+
+  {{#if @message}}
+    <p class="relationship-network__panel__center" data-test-panel="message">{{@message}}</p>
+  {{/if}}
+
+  {{#if @significados}}
+    <section class="relationship-network__panel__section">
+      <h1 class="relationship-network__panel__section__title" data-test-panel="significado">Significado</h1>
+      <div class="relationship-network__panel__section__content">
+        {{#each @significados as |significado|}}
+          <p class="relationship-network__panel__section__content__paragraph" data-test-panel="significado-item">{{significado}}</p>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+
+  {{#if @relacionados}}
+    <section class="relationship-network__panel__section">
+      <h1 class="relationship-network__panel__section__title" data-test-panel="relacionadas">Palavras relacionadas</h1>
+      <div class="relationship-network__panel__section__content relationship-network__panel__section__content--related">
+        {{#each @relacionados as |relacionado index|}}
+          <button
+            type="button"
+            {{on "click" (fn @searchWord relacionado)}}
+            class="relationship-network__panel__section__content--related__item"
+            data-test-panel-relacionados-index={{index}}>{{relacionado}}</button>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+
+  {{#if @expressoes}}
+    <section class="relationship-network__panel__section">
+      <h1 class="relationship-network__panel__section__title" data-test-panel="expressao">Expressão</h1>
+      <div class="relationship-network__panel__section__content">
+        {{#each @expressoes as |expressao index|}}
+          <p
+            class="relationship-network__panel__section__content__paragraph"
+            data-test-panel-expressao-index={{index}}>{{expressao}}</p>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+
+  {{#if @citacoes}}
+    <section class="relationship-network__panel__section">
+      <h1 class="relationship-network__panel__section__title" data-test-panel="citacoes">Citações</h1>
+      <div class="relationship-network__panel__section__content">
+        {{#each @citacoes as |citacao index|}}
+          <blockquote class="relationship-network__panel__section__content__blockquote" data-test-panel-citacao-index={{index}}>
+            <p data-test-panel="citacao-texto">{{citacao.texto}}</p>
+            <cite data-test-panel="citacao-autor">{{citacao.autor}}</cite>
+          </blockquote>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+</div>
