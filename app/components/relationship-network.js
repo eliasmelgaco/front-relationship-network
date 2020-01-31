@@ -16,16 +16,16 @@ export default class RelationshipNetworkComponent extends Component {
           style: {
             'label': 'data(id)',
             'text-valign': 'center',
-            'color': '#000000',
+            'color': '#8f4d3c',
             'font-size': '8px',
-            'background-color': '#3a7ecf'
+            'background-color': '#e8d4b4'
           }
         },
 
         {
           selector: 'edge',
           style: {
-            'line-color': '#3a7ecf',
+            'line-color': '#e8d4b4',
             'opacity': 0.5
           }
         }

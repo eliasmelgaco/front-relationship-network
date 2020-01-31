@@ -1,4 +1,21 @@
-<div class="relationship-network__panel">
+<button
+  type="button"
+  {{on "click" (set this.showMenu true)}}
+  class="relationship-network__btnmobile relationship-network__btnmobile--open"
+  data-test-panel="buscar">
+    <FaIcon @icon="bars" />
+  </button>
+
+<div class="relationship-network__panel {{if this.showMenu "relationship-network__panel--show"}}">
+  <button
+    type="button"
+    {{on "click" (set this.showMenu false)}}
+    class="relationship-network__btnmobile relationship-network__btnmobile--close"
+    data-test-panel="buscar"
+  >
+    <FaIcon @icon="chevron-left" />
+  </button>
+
   <section class="relationship-network__panel__section">
     <div class="relationship-network__panel__section__search">
       <label for="search" class="relationship-network__panel__section__search__label">Digite a palavra</label>
@@ -14,7 +31,7 @@
           type="button"
           {{on "click" (fn @searchWord @palavra)}}
           class="relationship-network__panel__section__search__group__button"
-          data-test-panel="buscar">BUSCAR</button>
+          data-test-panel="buscar"><FaIcon @icon="search" /></button>
       </div>
     </div>
   </section>

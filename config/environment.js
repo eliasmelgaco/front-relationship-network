@@ -13,6 +13,11 @@ module.exports = function(environment) {
       }
     },
 
+    fontawesome: {
+      defaultPrefix: 'fas',
+      'free-solid-svg-icons': ['bars', 'search', 'chevron-left'],
+    },
+
     APP: {
       API_RELATIONSHIP: 'http://localhost:5000'
     },
