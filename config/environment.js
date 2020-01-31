@@ -7,19 +7,13 @@ module.exports = function(environment) {
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
-      FEATURES: {
-        // Here you can enable experimental features on an ember canary build
-        // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
-      },
+      FEATURES: {},
       EXTEND_PROTOTYPES: {
-        // Prevent Ember Data from overriding Date.parse.
         Date: false
       }
     },
 
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
       API_RELATIONSHIP: 'http://localhost:5000'
     },
 
@@ -28,20 +22,11 @@ module.exports = function(environment) {
     }
   };
 
-  if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
-
-  }
-
   if (environment === 'test') {
-    // Testem prefers this...
     ENV.locationType = 'none';
 
-    // keep test console output quieter
+    ENV.APP.API_RELATIONSHIP = '';
+
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
@@ -50,7 +35,6 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
     ENV.APP.API_RELATIONSHIP = 'https://back-relationship-network.herokuapp.com';
   }
 
