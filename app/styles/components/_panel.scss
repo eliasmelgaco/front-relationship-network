@@ -1,0 +1,78 @@
+.relationship-network__panel {
+  overflow-y: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  color: #fff;
+
+  &__center {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (min-width: 100px) {
+    width: 25vw;
+    height: 100vh;
+    background-color: $primary;
+  }
+
+  &__section {
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+
+    &__title {
+      @extend .section-title;
+    }
+
+    &__content {
+      padding-left: 1rem;
+
+      &__paragraph {
+        margin-bottom: .5rem;
+      }
+
+      &--related {
+        &__item {
+          @extend .button-secondary;
+          margin-bottom: .25rem;
+        }
+      }
+
+      &__blockquote {
+        &:not(:last-child) {
+          margin-bottom: 2rem;
+        }
+      }
+    }
+
+    &__search {
+      &__label {
+        display: block;
+        @extend .section-title;
+      }
+  
+      &__group {
+        display: flex;
+  
+        &__input {
+          box-sizing: border-box;
+          background-color: #f9fcff;
+          border: 1px solid #d3deec;
+          border-radius: .25rem;
+          box-shadow: 0 0 0 0 transparent;
+          color: #5c707e;
+          display: block;
+          font-size: 1rem;
+          line-height: 1.5;
+          padding: .5rem 1rem;
+          flex: 1;
+        }
+  
+        &__button {
+          @extend .button-primary;
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}

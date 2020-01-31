@@ -1,0 +1,38 @@
+.section-title {
+  font-size: $font-lg;
+  margin-bottom: 1rem;
+}
+
+.button {
+  border-radius: .25rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 0 transparent;
+  cursor: pointer;
+  display: inline-block;
+  font-size: $font-default;
+  text-align: center;
+  text-decoration: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button-primary {
+  @extend .button;
+  padding: .5rem 1rem;
+  background-color: $secondary;
+  font-weight: 700;
+  color: #5c707e;
+}
+
+.button-secondary {
+  @extend .button;
+  padding: .25rem .5rem;
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
